@@ -846,6 +846,17 @@ func (c *Context) Header(key, value string) {
 }
 
 // GetHeader returns value from request headers.
+func (s *Context) GetIP() (ip string) {
+	if ip = s.GetHeader("X-Real-IP"); ip != "" {
+		return
+	}
+	if ip = s.GetHeader("x-forwarded-for"); ip != "" {
+		return
+	}
+	return s.Request.RemoteAddr
+}
+
+// GetHeader returns value from request headers.
 func (c *Context) GetHeader(key string) string {
 	return c.requestHeader(key)
 }
