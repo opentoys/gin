@@ -6,7 +6,9 @@
 
 package binding
 
-import "net/http"
+import (
+	"net/http"
+)
 
 // Content-Type MIME of the most common data formats.
 const (
@@ -67,7 +69,7 @@ type StructValidator interface {
 // Validator is the default validator which implements the StructValidator
 // interface. It uses https://github.com/go-playground/validator/tree/v10.6.1
 // under the hood.
-var Validator StructValidator = &defaultValidator{}
+var Validator = true
 
 // These implement the Binding interface and can be used to bind the data
 // present in the request to struct instances.
@@ -78,12 +80,8 @@ var (
 	Query         = queryBinding{}
 	FormPost      = formPostBinding{}
 	FormMultipart = formMultipartBinding{}
-	ProtoBuf      = protobufBinding{}
-	MsgPack       = msgpackBinding{}
-	YAML          = yamlBinding{}
 	Uri           = uriBinding{}
 	Header        = headerBinding{}
-	TOML          = tomlBinding{}
 )
 
 // Default returns the appropriate Binding instance based on the HTTP method
@@ -98,14 +96,6 @@ func Default(method, contentType string) Binding {
 		return JSON
 	case MIMEXML, MIMEXML2:
 		return XML
-	case MIMEPROTOBUF:
-		return ProtoBuf
-	case MIMEMSGPACK, MIMEMSGPACK2:
-		return MsgPack
-	case MIMEYAML:
-		return YAML
-	case MIMETOML:
-		return TOML
 	case MIMEMultipartPOSTForm:
 		return FormMultipart
 	default: // case MIMEPOSTForm:
@@ -113,9 +103,6 @@ func Default(method, contentType string) Binding {
 	}
 }
 
-func validate(obj any) error {
-	if Validator == nil {
-		return nil
-	}
-	return Validator.ValidateStruct(obj)
+var Validate = func(v any) error {
+	return nil
 }

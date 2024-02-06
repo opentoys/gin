@@ -29,7 +29,7 @@ func (formBinding) Bind(req *http.Request, obj any) error {
 	if err := mapForm(obj, req.Form); err != nil {
 		return err
 	}
-	return validate(obj)
+	return Validate(obj)
 }
 
 func (formPostBinding) Name() string {
@@ -43,7 +43,7 @@ func (formPostBinding) Bind(req *http.Request, obj any) error {
 	if err := mapForm(obj, req.PostForm); err != nil {
 		return err
 	}
-	return validate(obj)
+	return Validate(obj)
 }
 
 func (formMultipartBinding) Name() string {
@@ -58,5 +58,5 @@ func (formMultipartBinding) Bind(req *http.Request, obj any) error {
 		return err
 	}
 
-	return validate(obj)
+	return Validate(obj)
 }

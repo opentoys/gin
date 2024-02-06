@@ -22,7 +22,7 @@ func (headerBinding) Bind(req *http.Request, obj any) error {
 		return err
 	}
 
-	return validate(obj)
+	return Validate(obj)
 }
 
 func mapHeader(ptr any, h map[string][]string) error {

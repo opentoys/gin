@@ -79,7 +79,7 @@ func SetMode(value string) {
 
 // DisableBindValidation closes the default validator.
 func DisableBindValidation() {
-	binding.Validator = nil
+	binding.Validator = false
 }
 
 // EnableJsonDecoderUseNumber sets true for binding.EnableDecoderUseNumber to

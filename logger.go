@@ -10,8 +10,6 @@ import (
 	"net/http"
 	"os"
 	"time"
-
-	"github.com/mattn/go-isatty"
 )
 
 type consoleColorModeValue int
@@ -224,8 +222,7 @@ func LoggerWithConfig(conf LoggerConfig) HandlerFunc {
 
 	isTerm := true
 
-	if w, ok := out.(*os.File); !ok || os.Getenv("TERM") == "dumb" ||
-		(!isatty.IsTerminal(w.Fd()) && !isatty.IsCygwinTerminal(w.Fd())) {
+	if os.Getenv("TERM") == "dumb" {
 		isTerm = false
 	}
 
